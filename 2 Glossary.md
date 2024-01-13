@@ -1,0 +1,23 @@
+**Expressions:** A Nix expression can be everything, from a simple string, to a function to a set of expressions. You might even see combinations of nix files referred to as expressions. But could also refer to something as small as a single function definition or variable setting. ^d71ed3
+
+**Nixpkgs:** The Nix Packages collection (Nixpkgs) is a set of thousands of packages for the Nix package manager, released under a permissive MIT license. Packages are available for several platforms, and can be used with the Nix package manager on most GNU/Linux distributions as well as NixOS. ^5e70bd
+
+**Nix Package Manager:**  A purely functional package manager and by that I mean that it treats packages like values in functional programming language. The packages are built by functions that don’t have side-effects, and they never change after they have been built.  ^49fba8
+
+**Nix Language:** A purely functional language is designed for conveniently creating and composing derivations – precise descriptions of how contents of existing files are used to derive new files such as those used to configure an operating system.
+
+**Flakes:** Flakes is a management feature of Nix packages that simplifies usability and reproducibility of Nix installations. They manage the dependencies of multiple Nix [expressions](2%20Glossary.md#^d71ed3) which are the primary protocols for specifying packages. Flakes implements these protocols in a consistent schema with a common set of policies for managing packages. ^fa85d9
+
+**flake:** A flake is a filesystem tree (typically fetched from a Git repository or a tarball) that contains a file named `flake.nix` in the root directory. `flake.nix` specifies some metadata about the flake such as dependencies (called _inputs_), as well as its _outputs_ (the Nix values such as packages or NixOS modules provided by the flake). ^acc8a0
+
+**Attribute set:** An attribute set is a collection of name-value-pairs (called attributes) enclosed in curly brackets ({ }). They are declared with this syntax `attrset = { name = expr; ... }` where the attribute names are on the left side of the `=` equal sign and the attribute expressions are on the right. ^3b069a
+
+**Function:** Functions in Nix serve mostly the same purpose they do in other languages but what you might not be used to if you've not used a functional language before is that Nix functions are anonymous meaning they don't need to be assigned to a variable and in Nix they only accept a single argument. They are defined with this syntax `pattern: body` where The pattern specifies what the argument of the function must look like, and binds variables in the body to (parts of) the argument. Nix supports 3 function patterns [[2 Glossary#^7610c5|single identifier pattern]], [[2 Glossary#^c9bcfd|set pattern]] and [[2 Glossary#^a61d07|@-pattern]] ^999202
+
+**single identifier pattern:** The single identifier pattern matches any argument `x: x + 3` for example is a function that accepts an argument and adds 3 to it. ^7610c5
+
+**set pattern:** A set pattern takes the form of `{ name1, name2, …, nameN }` and matches a [[2 Glossary#^3b069a|attribute set]] containing the listed attributes, and binds the values of those attributes to variables in the function body. `{x, y}: x + y` for example is a function that takes a list of 2 keys (x and y) and returns their sum `x + y`. This is sometimes a method to define functions that accept multiple arguments even though it's technically _still_ one argument that just contains unset key-value pairs. ^c9bcfd
+
+**@-pattern:** An @-pattern provides a means of referring to the whole value being matched and is there for accessing arguments that might not be in the declaration of the function. Attribute sets in a [[2 Glossary#^c9bcfd|set pattern]] type declaration can include an ellipses `{x, y, z, ...}: x + y + z` to accept more arguments than the function actually needs to use in it's expression. The @-pattern syntax looks like this `args@{ x, y, z, ...}: x + y + z + args.derrp` and let's you address values that may or may not be passed in with the dot delimiter. ^a61d07
+
+**self:** In the Nix programming language, the `self` keyword is used to refer to the current set or attribute being defined. When defining a package or an attribute in Nix, the `self` keyword allows you to refer to the package or attribute itself within its definition. This is particularly useful when referring to other attributes or dependencies within the same set or package definition.  ^80279d
